@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bihar Ka Swad — Asli Bihari Khana</title>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:ital@0;1&family=Mukta:wght@300;400;500;600;700&family=Yatra+One&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root {
+  --mustard:   #D4860B;
+  --mustard-l: #F5A623;
+  --red:       #B5270C;
+  --red-l:     #E63211;
+  --green:     #2D6A2D;
+  --soil:      #3E2005;
+  --soil-l:    #6B3A10;
+  --cream:     #FDF6EC;
+  --cream-d:   #F5E9D3;
+  --white:     #FFFFFF;
+  --text:      #1F0F00;
+  --muted:     #7A5C3C;
+  --border:    #E8D5B5;
+  --card:      #FFFCF5;
+  --shadow:    rgba(62,32,5,0.10);
+  --shadow-lg: rgba(62,32,5,0.18);
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; font-size:16px; }
+body {
+  font-family:'Mukta', sans-serif;
+  background:var(--cream);
+  color:var(--text);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+img { display:block; max-width:100%; }
+a { text-decoration:none; color:inherit; }
+button { font-family:'Mukta',sans-serif; cursor:pointer; border:none; outline:none; }
+input, select, textarea { font-family:'Mukta',sans-serif; outline:none; }
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar { width:6px; }
+::-webkit-scrollbar-track { background:#F5E9D3; }
+::-webkit-scrollbar-thumb { background:var(--mustard); border-radius:3px; }
+
+/* ============================================================
+   TOP ANNOUNCEMENT BAR
+   ============================================================ */
+.topbar {
+  background:var(--red);
+  color:#fff;
+  text-align:center;
+  font-size:0.82rem;
+  font-weight:500;
+  padding:0.45rem 1rem;
+  letter-spacing:0.4px;
+}
+.topbar span { color:var(--mustard-l); font-weight:700; }
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+.navbar {
+  position:sticky; top:0; z-index:1000;
+  background:var(--white);
+  border-bottom:3px solid var(--mustard);
+  box-shadow:0 2px 16px var(--shadow);
+}
+.nav-inner {
+  max-width:1280px; margin:0 auto;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 2rem; height:70px;
+}
+.nav-logo {
+  display:flex; align-items:center; gap:0.6rem;
+}
+.logo-icon {
+  width:44px; height:44px; border-radius:12px;
+  background:linear-gradient(135deg,var(--mustard),var(--red));
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.4rem;
+}
+.logo-text {
+  font-family:'Yatra One', cursive;
+  font-size:1.5rem;
+  color:var(--soil);
+  line-height:1.1;
+}
+.logo-text sub {
+  display:block;
+  font-family:'Mukta',sans-serif;
+  font-size:0.62rem;
+  font-weight:600;
+  color:var(--mustard);
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+.nav-links {
+  display:flex; align-items:center; gap:0.25rem;
+}
+.nav-links a {
+  font-size:0.9rem; font-weight:600;
+  color:var(--muted);
+  padding:0.45rem 1rem; border-radius:8px;
+  transition:all 0.2s;
+  white-space:nowrap;
+}
+.nav-links a:hover, .nav-links a.active {
+  color:var(--mustard);
+  background:rgba(212,134,11,0.08);
+}
+.nav-actions { display:flex; align-items:center; gap:0.75rem; }
+.nav-phone {
+  font-size:0.82rem; font-weight:700; color:var(--soil);
+  display:flex; align-items:center; gap:0.35rem;
+}
+.btn-cart {
+  background:var(--mustard);
+  color:var(--white); font-weight:700; font-size:0.88rem;
+  padding:0.55rem 1.1rem; border-radius:10px;
+  display:flex; align-items:center; gap:0.5rem;
+  transition:all 0.2s; position:relative;
+  box-shadow:0 2px 8px rgba(212,134,11,0.3);
+}
+.btn-cart:hover { background:var(--mustard-l); transform:translateY(-1px); }
+.cart-count {
+  position:absolute; top:-7px; right:-7px;
+  background:var(--red); color:#fff;
+  border-radius:50%; width:20px; height:20px;
+  font-size:0.68rem; font-weight:800;
+  display:flex; align-items:center; justify-content:center;
+  border:2px solid #fff;
+}
+.hamburger { display:none; flex-direction:column; gap:5px; background:none; padding:0.35rem; }
+.hamburger span { width:22px; height:2px; background:var(--soil); border-radius:2px; display:block; transition:0.3s; }
+
+/* ============================================================
+   SECTION SYSTEM
+   ============================================================ */
+.page-section { display:none; }
+.page-section.active { display:block; }
+
+/* ============================================================
+   HERO — HOME
+   ============================================================ */
+.hero {
+  background:linear-gradient(135deg, #3E2005 0%, #6B3A10 40%, #8B4E18 70%, #3E2005 100%);
+  min-height:90vh;
+  display:grid; grid-template-columns:1fr 1fr;
+  align-items:center; gap:3rem;
+  padding:5rem 2rem 4rem;
+  position:relative; overflow:hidden;
+  max-width:100%;
+}
+.hero::before {
+  content:'';
+  position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 60% 70% at 75% 50%, rgba(212,134,11,0.12) 0%, transparent 65%),
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23D4860B' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events:none;
+}
+.hero-left { position:relative; z-index:2; }
+.hero-breadcrumb {
+  display:inline-flex; align-items:center; gap:0.5rem;
+  background:rgba(212,134,11,0.18);
+  border:1px solid rgba(212,134,11,0.35);
+  border-radius:30px; padding:0.35rem 1rem;
+  font-size:0.78rem; font-weight:600; color:var(--mustard-l);
+  letter-spacing:1.5px; text-transform:uppercase; margin-bottom:1.5rem;
+}
+.hero-left h1 {
+  font-family:'Yatra One', cursive;
+  font-size:clamp(2.4rem, 4.5vw, 3.8rem);
+  color:#fff; line-height:1.15; margin-bottom:1rem;
+}
+.hero-left h1 .highlight {
+  color:var(--mustard-l);
+  position:relative;
+}
+.hero-left p {
+  color:#C8A882; font-size:1.05rem; line-height:1.75;
+  max-width:480px; margin-bottom:2rem;
+}
+.hero-cta { display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:2.5rem; }
+.btn-primary {
+  background:linear-gradient(135deg, var(--mustard), var(--mustard-l));
+  color:#fff; font-weight:700; font-size:0.98rem;
+  padding:0.85rem 2rem; border-radius:12px;
+  box-shadow:0 4px 18px rgba(212,134,11,0.4);
+  transition:all 0.25s; display:inline-flex; align-items:center; gap:0.5rem;
+}
+.btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 28px rgba(212,134,11,0.5); }
+.btn-outline-w {
+  background:transparent; border:2px solid rgba(255,255,255,0.35);
+  color:#fff; font-weight:600; font-size:0.98rem;
+  padding:0.85rem 2rem; border-radius:12px;
+  transition:all 0.25s;
+}
+.btn-outline-w:hover { background:rgba(255,255,255,0.1); border-color:rgba(255,255,255,0.6); }
+.hero-stats { display:flex; gap:2rem; }
+.hero-stat-val {
+  font-family:'Yatra One',cursive; font-size:1.9rem; color:var(--mustard-l);
+}
+.hero-stat-lbl { font-size:0.77rem; color:#8B7052; font-weight:500; }
+
+/* Food cards floating grid */
+.hero-right {
+  position:relative; z-index:2;
+  display:grid; grid-template-columns:1fr 1fr; gap:1rem;
+  animation:floatIn 0.8s ease 0.5s both;
+}
+@keyframes floatIn { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+.hero-food-card {
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.12);
+  border-radius:18px; padding:1.5rem 1rem;
+  text-align:center; backdrop-filter:blur(8px);
+  transition:transform 0.3s;
+}
+.hero-food-card:hover { transform:translateY(-6px) scale(1.02); }
+.hero-food-card .food-emoji { font-size:3rem; margin-bottom:0.6rem; }
+.hero-food-card .food-name { color:#E8D5B5; font-size:0.85rem; font-weight:600; }
+.hero-food-card .food-price { color:var(--mustard-l); font-weight:700; font-size:0.95rem; margin-top:0.25rem; }
+.hero-food-card.featured {
+  grid-column:span 2;
+  display:flex; align-items:center; gap:1.25rem; text-align:left;
+  padding:1.2rem 1.5rem;
+}
+.hero-food-card.featured .food-emoji { font-size:3.5rem; margin:0; }
+.hero-food-card.featured .food-name { font-size:1rem; }
+.hero-food-card.featured .food-desc { font-size:0.78rem; color:#A08060; margin-top:0.2rem; }
+
+/* ============================================================
+   SECTION HEADER
+   ============================================================ */
+.section-wrap { max-width:1280px; margin:0 auto; padding:4.5rem 2rem; }
+.sec-head { margin-bottom:2.5rem; }
+.sec-head .kicker {
+  display:inline-flex; align-items:center; gap:0.4rem;
+  font-size:0.75rem; font-weight:700; letter-spacing:2px;
+  text-transform:uppercase; color:var(--mustard);
+  margin-bottom:0.6rem;
+}
+.sec-head h2 {
+  font-family:'Yatra One',cursive;
+  font-size:clamp(1.8rem,3vw,2.6rem);
+  color:var(--soil);
+  margin-bottom:0.4rem;
+}
+.sec-head p { color:var(--muted); font-size:0.95rem; max-width:520px; }
+.sec-head-row { display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:1rem; }
+
+/* ============================================================
+   PILL TABS
+   ============================================================ */
+.pill-tabs { display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:2rem; }
+.pill {
+  background:var(--white); border:1.5px solid var(--border);
+  color:var(--muted); font-weight:600; font-size:0.83rem;
+  padding:0.45rem 1.1rem; border-radius:25px;
+  transition:all 0.2s;
+}
+.pill:hover { border-color:var(--mustard); color:var(--mustard); }
+.pill.active {
+  background:var(--mustard); border-color:var(--mustard);
+  color:#fff; box-shadow:0 2px 8px rgba(212,134,11,0.3);
+}
+
+/* ============================================================
+   DISH CARD
+   ============================================================ */
+.dishes-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:1.5rem; }
+.dish-card {
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px; overflow:hidden;
+  box-shadow:0 2px 10px var(--shadow);
+  transition:all 0.3s;
+}
+.dish-card:hover { transform:translateY(-5px); box-shadow:0 14px 35px var(--shadow-lg); }
+.dish-img {
+  height:170px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:4.5rem; position:relative;
+  background:linear-gradient(135deg,#FFF3E0,#FDE8C8);
+}
+.dish-badges {
+  position:absolute; top:10px; left:10px;
+  display:flex; gap:0.4rem; flex-wrap:wrap;
+}
+.badge-veg {
+  background:#fff;
+  border:2px solid #2D6A2D;
+  width:18px; height:18px; border-radius:3px;
+  display:flex; align-items:center; justify-content:center;
+}
+.badge-veg::after { content:'●'; font-size:8px; color:#2D6A2D; }
+.badge-nonveg {
+  background:#fff;
+  border:2px solid #B5270C;
+  width:18px; height:18px; border-radius:3px;
+  display:flex; align-items:center; justify-content:center;
+}
+.badge-nonveg::after { content:'●'; font-size:8px; color:#B5270C; }
+.badge-bestseller {
+  background:var(--mustard); color:#fff;
+  font-size:0.62rem; font-weight:700; letter-spacing:0.5px;
+  padding:0.15rem 0.5rem; border-radius:20px; text-transform:uppercase;
+}
+.dish-body { padding:1.1rem 1.25rem 1.25rem; }
+.dish-body h4 { font-size:1rem; font-weight:700; color:var(--soil); margin-bottom:0.25rem; }
+.dish-body .desc { font-size:0.8rem; color:var(--muted); margin-bottom:0.9rem; line-height:1.45; }
+.dish-footer { display:flex; align-items:center; justify-content:space-between; }
+.dish-price { font-family:'Yatra One',cursive; font-size:1.25rem; color:var(--mustard); }
+.dish-price span { font-family:'Mukta',sans-serif; font-size:0.75rem; color:var(--muted); margin-left:2px; }
+.btn-addcart {
+  background:var(--mustard); color:#fff;
+  font-weight:700; font-size:0.82rem;
+  padding:0.45rem 1rem; border-radius:8px;
+  transition:all 0.2s;
+  display:flex; align-items:center; gap:0.35rem;
+}
+.btn-addcart:hover { background:var(--mustard-l); transform:scale(1.05); }
+.btn-addcart.added { background:var(--green); }
+
+/* ============================================================
+   RESTAURANT INFO STRIP
+   ============================================================ */
+.rest-strip {
+  background:linear-gradient(135deg,var(--soil),var(--soil-l));
+  border-radius:20px; padding:2.5rem;
+  display:flex; justify-content:space-between; align-items:center;
+  gap:2rem; flex-wrap:wrap; margin-bottom:3rem;
+  position:relative; overflow:hidden;
+}
+.rest-strip::after {
+  content:'🍽';
+  position:absolute; right:2rem; top:50%;
+  transform:translateY(-50%);
+  font-size:7rem; opacity:0.06;
+}
+.rest-strip-left h3 {
+  font-family:'Yatra One',cursive;
+  font-size:1.8rem; color:var(--mustard-l); margin-bottom:0.35rem;
+}
+.rest-strip-left p { color:#A08060; font-size:0.9rem; max-width:380px; line-height:1.6; }
+.rest-strip-badges { display:flex; gap:0.6rem; flex-wrap:wrap; margin-top:1rem; }
+.rest-badge {
+  background:rgba(212,134,11,0.15); border:1px solid rgba(212,134,11,0.3);
+  color:var(--mustard-l); font-size:0.78rem; font-weight:600;
+  padding:0.3rem 0.85rem; border-radius:20px;
+}
+.rest-info-grid { display:flex; flex-direction:column; gap:0.7rem; }
+.rest-info-row {
+  display:flex; align-items:center; gap:0.7rem;
+  color:#C8A882; font-size:0.9rem;
+}
+.rest-info-row .icon {
+  width:34px; height:34px; border-radius:8px;
+  background:rgba(212,134,11,0.15);
+  display:flex; align-items:center; justify-content:center;
+  font-size:1rem; flex-shrink:0;
+}
+
+/* ============================================================
+   TABLE BOOKING
+   ============================================================ */
+.booking-card {
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:20px; padding:2.5rem;
+  box-shadow:0 4px 20px var(--shadow);
+}
+.booking-card h3 {
+  font-family:'Yatra One',cursive;
+  font-size:1.6rem; color:var(--soil); margin-bottom:0.4rem;
+}
+.booking-card > p { color:var(--muted); font-size:0.9rem; margin-bottom:2rem; }
+.booking-grid {
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:1.1rem;
+}
+.form-field { display:flex; flex-direction:column; gap:0.4rem; }
+.form-field label { font-size:0.8rem; font-weight:700; color:var(--soil); text-transform:uppercase; letter-spacing:0.5px; }
+.form-field input, .form-field select {
+  background:var(--cream); border:1.5px solid var(--border);
+  border-radius:10px; padding:0.75rem 1rem;
+  font-size:0.93rem; color:var(--text);
+  transition:border-color 0.2s;
+}
+.form-field input:focus, .form-field select:focus { border-color:var(--mustard); background:#fff; }
+.btn-book {
+  background:linear-gradient(135deg,var(--red),var(--red-l));
+  color:#fff; font-weight:700; font-size:0.95rem;
+  padding:0.82rem 2rem; border-radius:10px;
+  box-shadow:0 3px 14px rgba(181,39,12,0.3);
+  transition:all 0.2s; align-self:flex-end; white-space:nowrap;
+}
+.btn-book:hover { transform:translateY(-2px); box-shadow:0 6px 22px rgba(181,39,12,0.4); }
+
+/* ============================================================
+   RECIPE SECTION
+   ============================================================ */
+.recipe-search-bar {
+  display:flex; gap:0.75rem; margin-bottom:2rem;
+}
+.recipe-search-bar input {
+  flex:1; background:var(--white); border:1.5px solid var(--border);
+  border-radius:12px; padding:0.8rem 1.25rem;
+  font-size:0.95rem; color:var(--text);
+  transition:border-color 0.2s;
+}
+.recipe-search-bar input:focus { border-color:var(--mustard); }
+.recipe-search-bar button {
+  background:var(--mustard); color:#fff; font-weight:700;
+  font-size:0.9rem; padding:0.8rem 1.5rem; border-radius:12px;
+  transition:all 0.2s;
+}
+.recipe-search-bar button:hover { background:var(--mustard-l); }
+
+.recipes-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:1.75rem; }
+.recipe-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:20px; overflow:hidden;
+  box-shadow:0 2px 10px var(--shadow);
+  transition:all 0.3s; cursor:pointer;
+}
+.recipe-card:hover { transform:translateY(-5px); box-shadow:0 16px 40px var(--shadow-lg); }
+.recipe-img {
+  height:180px; display:flex; align-items:center; justify-content:center;
+  font-size:5rem; position:relative;
+}
+.diff-chip {
+  position:absolute; top:12px; right:12px;
+  font-size:0.7rem; font-weight:700; padding:0.2rem 0.65rem; border-radius:20px;
+  letter-spacing:0.5px;
+}
+.diff-chip.easy { background:#E8F5E9; color:#2D6A2D; }
+.diff-chip.medium { background:#FFF3E0; color:#D4860B; }
+.diff-chip.hard { background:#FFEBEE; color:#B5270C; }
+.recipe-body { padding:1.4rem 1.5rem 1.5rem; }
+.recipe-body h4 { font-size:1.05rem; font-weight:700; color:var(--soil); margin-bottom:0.4rem; }
+.recipe-body p { font-size:0.82rem; color:var(--muted); margin-bottom:1rem; line-height:1.5; }
+.recipe-meta-row { display:flex; gap:1rem; flex-wrap:wrap; }
+.rmeta { font-size:0.77rem; color:var(--muted); }
+.rmeta b { color:var(--mustard); }
+
+/* ============================================================
+   DELIVERY / ORDER
+   ============================================================ */
+.order-layout {
+  display:grid; grid-template-columns:1fr 360px; gap:2.5rem; align-items:start;
+}
+.order-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:16px; padding:1.25rem;
+  box-shadow:0 2px 8px var(--shadow);
+  transition:all 0.3s;
+}
+.order-card:hover { transform:translateY(-3px); box-shadow:0 10px 26px var(--shadow-lg); }
+.order-card .oc-emoji { font-size:3rem; margin-bottom:0.75rem; }
+.order-card h4 { font-weight:700; font-size:0.98rem; color:var(--soil); margin-bottom:0.2rem; }
+.order-card p { font-size:0.8rem; color:var(--muted); margin-bottom:0.9rem; }
+.oc-foot { display:flex; align-items:center; justify-content:space-between; }
+.oc-price { font-family:'Yatra One',cursive; font-size:1.15rem; color:var(--mustard); }
+.qty-wrap { display:flex; align-items:center; gap:0.5rem; }
+.qty-btn {
+  width:30px; height:30px; border-radius:50%;
+  border:2px solid var(--border); background:var(--white);
+  font-size:1.1rem; font-weight:700; color:var(--soil);
+  display:flex; align-items:center; justify-content:center;
+  transition:all 0.2s;
+}
+.qty-btn:hover { border-color:var(--mustard); color:var(--mustard); background:#FDF6EC; }
+.qty-num { font-weight:700; min-width:20px; text-align:center; color:var(--soil); }
+
+/* Cart panel */
+.cart-panel {
+  background:var(--white); border:1px solid var(--border);
+  border-radius:20px; padding:1.75rem;
+  box-shadow:0 4px 20px var(--shadow);
+  position:sticky; top:90px;
+  max-height:calc(100vh - 110px); overflow-y:auto;
+}
+.cart-panel::-webkit-scrollbar { width:4px; }
+.cart-panel h3 {
+  font-family:'Yatra One',cursive;
+  font-size:1.35rem; color:var(--soil); margin-bottom:1.25rem;
+}
+.cart-empty { text-align:center; padding:2rem 0; color:var(--muted); }
+.cart-empty-icon { font-size:3.5rem; display:block; margin-bottom:0.75rem; }
+.cart-item {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:0.85rem 0; border-bottom:1px dashed var(--border); gap:0.5rem;
+}
+.ci-left h5 { font-size:0.88rem; font-weight:600; color:var(--soil); }
+.ci-left p { font-size:0.75rem; color:var(--muted); }
+.ci-right { display:flex; align-items:center; gap:0.5rem; }
+.ci-price { font-weight:700; color:var(--mustard); font-size:0.93rem; }
+.ci-del { background:none; color:var(--muted); font-size:1rem; transition:color 0.2s; }
+.ci-del:hover { color:var(--red); }
+.cart-subtotals { padding:1rem 0; border-top:1px solid var(--border); margin-top:0.75rem; }
+.cart-row { display:flex; justify-content:space-between; font-size:0.85rem; color:var(--muted); margin-bottom:0.4rem; }
+.cart-total-row { display:flex; justify-content:space-between; font-weight:700; color:var(--soil); font-size:1rem; padding-top:0.5rem; border-top:1.5px solid var(--border); }
+.cart-total-row .val { font-family:'Yatra One',cursive; font-size:1.3rem; color:var(--mustard); }
+.btn-checkout {
+  width:100%; background:linear-gradient(135deg,var(--mustard),var(--mustard-l));
+  color:#fff; font-weight:700; font-size:1rem;
+  padding:0.9rem; border-radius:12px; margin-top:1.25rem;
+  box-shadow:0 3px 14px rgba(212,134,11,0.3);
+  transition:all 0.2s;
+}
+.btn-checkout:hover { transform:translateY(-1px); box-shadow:0 6px 20px rgba(212,134,11,0.4); }
+.btn-checkout:disabled { background:#DDD; color:#999; box-shadow:none; cursor:not-allowed; transform:none; }
+.delivery-badge {
+  display:flex; align-items:center; gap:0.5rem;
+  background:#E8F5E9; border:1px solid #A5D6A7;
+  border-radius:8px; padding:0.6rem 0.9rem;
+  font-size:0.8rem; color:#2D6A2D; font-weight:600;
+  margin-top:0.75rem;
+}
+
+/* ============================================================
+   BLOG
+   ============================================================ */
+.blog-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:2rem; }
+.blog-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:20px; overflow:hidden;
+  box-shadow:0 2px 10px var(--shadow);
+  transition:all 0.3s;
+}
+.blog-card:hover { transform:translateY(-5px); box-shadow:0 16px 40px var(--shadow-lg); }
+.blog-img {
+  height:210px; display:flex; align-items:center; justify-content:center;
+  font-size:5.5rem; position:relative;
+}
+.blog-cat {
+  position:absolute; top:12px; left:12px;
+  background:var(--red); color:#fff;
+  font-size:0.7rem; font-weight:700; padding:0.25rem 0.75rem;
+  border-radius:20px; letter-spacing:0.5px;
+}
+.blog-body { padding:1.6rem; }
+.blog-meta { display:flex; gap:1rem; margin-bottom:0.75rem; }
+.blog-meta span { font-size:0.75rem; color:var(--muted); }
+.blog-body h4 {
+  font-family:'Yatra One',cursive;
+  font-size:1.15rem; color:var(--soil);
+  margin-bottom:0.5rem; line-height:1.4;
+}
+.blog-body p { font-size:0.83rem; color:var(--muted); line-height:1.6; margin-bottom:1.2rem; }
+.btn-read-more {
+  display:inline-flex; align-items:center; gap:0.4rem;
+  color:var(--mustard); font-weight:700; font-size:0.85rem;
+  border-bottom:2px solid transparent; transition:all 0.2s;
+}
+.btn-read-more:hover { border-color:var(--mustard); }
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+.modal-bg {
+  position:fixed; inset:0; background:rgba(30,10,0,0.75);
+  backdrop-filter:blur(4px);
+  display:none; align-items:center; justify-content:center;
+  z-index:5000; padding:1rem;
+}
+.modal-bg.open { display:flex; }
+.modal-box {
+  background:#fff; border-radius:24px;
+  max-width:660px; width:100%;
+  max-height:90vh; overflow-y:auto;
+  animation:popIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  position:relative;
+}
+@keyframes popIn { from{opacity:0;transform:scale(0.88)} to{opacity:1;transform:scale(1)} }
+.modal-box::-webkit-scrollbar { width:4px; }
+.modal-box::-webkit-scrollbar-thumb { background:var(--border); }
+.modal-close-btn {
+  position:absolute; top:1rem; right:1rem;
+  width:36px; height:36px; border-radius:50%;
+  background:var(--cream-d); border:none;
+  font-size:1.1rem; color:var(--muted); font-weight:700;
+  display:flex; align-items:center; justify-content:center;
+  transition:all 0.2s; cursor:pointer;
+}
+.modal-close-btn:hover { background:var(--red); color:#fff; }
+.modal-header { padding:2rem 2rem 1rem; }
+.modal-emoji { font-size:3.5rem; margin-bottom:0.75rem; }
+.modal-header h3 { font-family:'Yatra One',cursive; font-size:1.7rem; color:var(--soil); margin-bottom:0.5rem; }
+.modal-chips { display:flex; gap:0.5rem; flex-wrap:wrap; margin:0.75rem 0; }
+.modal-chip {
+  background:var(--cream-d); border:1px solid var(--border);
+  border-radius:20px; padding:0.22rem 0.75rem;
+  font-size:0.77rem; color:var(--muted);
+}
+.modal-body { padding:0 2rem 2rem; }
+.modal-body h4 { font-size:1rem; font-weight:700; color:var(--soil); margin:1.25rem 0 0.75rem; }
+.ingredient-list { list-style:none; }
+.ingredient-list li {
+  display:flex; align-items:flex-start; gap:0.6rem;
+  padding:0.4rem 0; border-bottom:1px dashed var(--border);
+  font-size:0.9rem; color:var(--text);
+}
+.ingredient-list li::before { content:'🔸'; font-size:0.68rem; margin-top:4px; flex-shrink:0; }
+.steps-ol { list-style:none; counter-reset:step; }
+.steps-ol li {
+  display:flex; gap:1rem; padding:0.85rem 0;
+  border-bottom:1px solid var(--border);
+  font-size:0.92rem; color:var(--text); line-height:1.65;
+  counter-increment:step;
+}
+.steps-ol li::before {
+  content:counter(step);
+  min-width:30px; height:30px;
+  background:var(--mustard); color:#fff;
+  border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-size:0.78rem; font-weight:800; flex-shrink:0;
+}
+.pro-tip {
+  background:linear-gradient(135deg,#FFF8EE,#FDF0DB);
+  border-left:4px solid var(--mustard);
+  border-radius:0 12px 12px 0; padding:1rem 1.2rem;
+  margin-top:1.5rem; font-size:0.88rem; color:var(--soil);
+}
+.pro-tip b { color:var(--mustard); }
+
+/* ============================================================
+   FEATURES ROW (home)
+   ============================================================ */
+.features-section { background:var(--soil); padding:3rem 2rem; }
+.features-inner { max-width:1280px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:1.5rem; }
+.feature-tile {
+  text-align:center; padding:1.75rem 1rem;
+  border:1px solid rgba(212,134,11,0.2);
+  border-radius:16px; transition:all 0.3s;
+}
+.feature-tile:hover { background:rgba(212,134,11,0.08); border-color:rgba(212,134,11,0.4); }
+.feature-tile .ficon { font-size:2.2rem; margin-bottom:0.75rem; }
+.feature-tile h4 { font-size:0.95rem; font-weight:700; color:#E8D5B5; margin-bottom:0.3rem; }
+.feature-tile p { font-size:0.78rem; color:#8B7052; line-height:1.5; }
+
+/* ============================================================
+   CATEGORIES ROW (home)
+   ============================================================ */
+.cats-row { display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; margin:1rem 0 3rem; }
+.cat-pill {
+  display:flex; flex-direction:column; align-items:center; gap:0.4rem;
+  background:var(--white); border:1.5px solid var(--border);
+  border-radius:16px; padding:1.1rem 1.5rem;
+  cursor:pointer; transition:all 0.25s; min-width:100px;
+  box-shadow:0 1px 5px var(--shadow);
+}
+.cat-pill:hover { border-color:var(--mustard); transform:translateY(-3px); box-shadow:0 8px 20px var(--shadow-lg); }
+.cat-pill .ce { font-size:2rem; }
+.cat-pill span { font-size:0.78rem; font-weight:600; color:var(--muted); }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  background:var(--soil);
+  color:#A08060; padding:3.5rem 2rem 1.5rem;
+}
+.footer-inner { max-width:1280px; margin:0 auto; }
+.footer-top {
+  display:grid; grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:3rem; margin-bottom:3rem;
+}
+.footer-brand .fl { font-family:'Yatra One',cursive; font-size:1.6rem; color:var(--mustard-l); margin-bottom:0.5rem; }
+.footer-brand p { font-size:0.85rem; line-height:1.7; max-width:260px; }
+.footer-col h5 { font-size:0.85rem; font-weight:700; color:#E8D5B5; margin-bottom:1rem; letter-spacing:0.5px; text-transform:uppercase; }
+.footer-col a { display:block; font-size:0.84rem; color:#8B7052; margin-bottom:0.5rem; transition:color 0.2s; }
+.footer-col a:hover { color:var(--mustard-l); }
+.footer-bottom { border-top:1px solid rgba(212,134,11,0.15); padding-top:1.25rem; display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem; }
+.footer-bottom p { font-size:0.78rem; color:#5A3C20; }
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+.toast-stack { position:fixed; bottom:1.5rem; right:1.5rem; z-index:9999; display:flex; flex-direction:column; gap:0.6rem; }
+.toast {
+  background:var(--soil); color:#E8D5B5;
+  border-left:4px solid var(--mustard);
+  border-radius:10px; padding:0.9rem 1.25rem;
+  font-size:0.88rem; font-weight:500; min-width:240px;
+  box-shadow:0 6px 24px rgba(0,0,0,0.25);
+  transform:translateX(120%); opacity:0;
+  transition:all 0.35s cubic-bezier(0.34,1.2,0.64,1);
+}
+.toast.show { transform:translateX(0); opacity:1; }
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@keyframes fadeSlideUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.anim { animation:fadeSlideUp 0.5s ease both; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media(max-width:1024px) {
+  .hero { grid-template-columns:1fr; min-height:auto; padding:4rem 2rem 3rem; }
+  .hero-right { display:grid; grid-template-columns:repeat(4,1fr); }
+  .hero-food-card.featured { grid-column:span 2; }
+  .order-layout { grid-template-columns:1fr; }
+  .cart-panel { position:static; max-height:none; }
+  .footer-top { grid-template-columns:1fr 1fr; }
+}
+@media(max-width:768px) {
+  .nav-links { display:none; position:fixed; top:70px; left:0; right:0; background:#fff; border-bottom:2px solid var(--mustard); flex-direction:column; padding:1rem; box-shadow:0 4px 20px var(--shadow); }
+  .nav-links.open { display:flex; }
+  .hamburger { display:flex; }
+  .nav-phone { display:none; }
+  .hero-right { grid-template-columns:1fr 1fr; }
+  .hero-food-card.featured { grid-column:span 2; }
+  .footer-top { grid-template-columns:1fr; gap:2rem; }
+  .rest-strip { flex-direction:column; }
+}
+@media(max-width:480px) {
+  .hero-right { grid-template-columns:repeat(2,1fr); }
+  .hero-stats { flex-wrap:wrap; gap:1.25rem; }
+  .section-wrap { padding:3rem 1.25rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ANNOUNCEMENT BAR -->
+<div class="topbar">
+  🎉 Aaj ka Special: <span>Litti Chokha ₹99 only</span> &nbsp;|&nbsp; 🛵 Free Delivery above ₹299 &nbsp;|&nbsp; 📞 Order: <span>+91 98765 43210</span>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <div class="logo-icon">🍛</div>
+      <div class="logo-text">
+        Bihar Ka Swad
+        <sub>Patna, Bihar</sub>
+      </div>
+    </div>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="#" onclick="goTo('home',this)" class="active">Home</a>
+      <a href="#" onclick="goTo('restaurant',this)">Restaurant</a>
+      <a href="#" onclick="goTo('recipes',this)">Recipes</a>
+      <a href="#" onclick="goTo('order',this)">Order Online</a>
+      <a href="#" onclick="goTo('blog',this)">Blog</a>
+    </nav>
+
+    <div class="nav-actions">
+      <div class="nav-phone">📞 98765-43210</div>
+      <button class="btn-cart" onclick="goTo('order',null)">
+        🛒 Cart
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+      <button class="hamburger" onclick="toggleNav()" aria-label="menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════════════
+     HOME PAGE
+══════════════════════════════════════════════════ -->
+<div id="home" class="page-section active">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="hero-breadcrumb">🌾 Bihar Ka Asli Swad</div>
+      <h1>
+        Mitti Ki Khushbu<br>
+        <span class="highlight">Dadi Ka Pyaar</span><br>
+        Ek Plate Mein
+      </h1>
+      <p>Litti Chokha se lekar Khaja tak — Bihar ke asli ghar jaisi recipes, seedha aapki thali mein. Patna ka sabse trusted Bihari restaurant.</p>
+      <div class="hero-cta">
+        <button class="btn-primary" onclick="goTo('order',null)">🛵 Abhi Order Karein</button>
+        <button class="btn-outline-w" onclick="goTo('restaurant',null)">Menu Dekhein →</button>
+      </div>
+      <div class="hero-stats">
+        <div><div class="hero-stat-val">500+</div><div class="hero-stat-lbl">Daily Orders</div></div>
+        <div><div class="hero-stat-val">4.9★</div><div class="hero-stat-lbl">Rating</div></div>
+        <div><div class="hero-stat-val">12 Saal</div><div class="hero-stat-lbl">Ka Anubhav</div></div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-food-card featured">
+        <span class="food-emoji">🔥</span>
+        <div>
+          <div class="food-name">Litti Chokha — Bihar Ka Raajkhana</div>
+          <div class="food-desc">Sattu stuffed wheat balls + roasted baigan chokha</div>
+          <div class="food-price">₹99 / Plate</div>
+        </div>
+      </div>
+      <div class="hero-food-card"><div class="food-emoji">🥘</div><div class="food-name">Mutton Curry</div><div class="food-price">₹280</div></div>
+      <div class="hero-food-card"><div class="food-emoji">🍚</div><div class="food-name">Biryani</div><div class="food-price">₹199</div></div>
+      <div class="hero-food-card"><div class="food-emoji">🍬</div><div class="food-name">Khaja</div><div class="food-price">₹60</div></div>
+      <div class="hero-food-card"><div class="food-emoji">🥛</div><div class="food-name">Sattu Sharbat</div><div class="food-price">₹40</div></div>
+    </div>
+  </section>
+
+  <!-- FEATURES STRIP -->
+  <div class="features-section">
+    <div class="features-inner">
+      <div class="feature-tile"><div class="ficon">🛵</div><h4>30 Min Delivery</h4><p>Patna mein sabse fast delivery guaranteed</p></div>
+      <div class="feature-tile"><div class="ficon">🌾</div><h4>100% Fresh</h4><p>Roz subah taazi samagri, koi preservative nahi</p></div>
+      <div class="feature-tile"><div class="ficon">👨‍🍳</div><h4>Master Chef</h4><p>Bihar ke expert haath se bana asli swad</p></div>
+      <div class="feature-tile"><div class="ficon">💳</div><h4>Easy Payment</h4><p>UPI, Cash, Card — sab accept</p></div>
+      <div class="feature-tile"><div class="ficon">🎁</div><h4>Har Hafte Offers</h4><p>Loyal customers ke liye special deals</p></div>
+    </div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <div class="section-wrap" style="padding-bottom:2rem;">
+    <div class="sec-head" style="text-align:center;">
+      <div class="kicker">🍛 Category</div>
+      <h2>Kya Khana Chahenge Aaj?</h2>
+    </div>
+    <div class="cats-row">
+      <div class="cat-pill" onclick="goTo('order',null)"><div class="ce">🔥</div><span>Litti Chokha</span></div>
+      <div class="cat-pill" onclick="goTo('order',null)"><div class="ce">🍚</div><span>Biryani</span></div>
+      <div class="cat-pill" onclick="goTo('order',null)"><div class="ce">🥘</div><span>Curry</span></div>
+      <div class="cat-pill" onclick="goTo('order',null)"><div class="ce">🍬</div><span>Mithai</span></div>
+      <div class="cat-pill" onclick="goTo('order',null)"><div class="ce">🥛</div><span>Drinks</span></div>
+      <div class="cat-pill" onclick="goTo('order',null)"><div class="ce">🥗</div><span>Snacks</span></div>
+    </div>
+  </div>
+
+  <!-- POPULAR DISHES -->
+  <div class="section-wrap" style="padding-top:0; background:var(--cream-d); max-width:100%;">
+    <div style="max-width:1280px; margin:0 auto; padding:3rem 2rem;">
+      <div class="sec-head-row">
+        <div class="sec-head" style="margin:0;">
+          <div class="kicker">⭐ Bestsellers</div>
+          <h2>Sabse Zyada Pasand Kiye Jaane Wale</h2>
+        </div>
+        <button class="pill active" onclick="goTo('restaurant',null)">Poora Menu →</button>
+      </div>
+      <div style="margin-top:2rem;" class="dishes-grid" id="homePopular"></div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="fl">Bihar Ka Swad</div>
+          <p>Patna ka sabse beloved Bihari restaurant. Asli ghar jaisa swad, 12 saalon se logon ke dil mein.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Quick Links</h5>
+          <a href="#" onclick="goTo('home',null)">Home</a>
+          <a href="#" onclick="goTo('restaurant',null)">Restaurant</a>
+          <a href="#" onclick="goTo('recipes',null)">Recipes</a>
+          <a href="#" onclick="goTo('order',null)">Order</a>
+          <a href="#" onclick="goTo('blog',null)">Blog</a>
+        </div>
+        <div class="footer-col">
+          <h5>Hamare Dishes</h5>
+          <a href="#">Litti Chokha</a>
+          <a href="#">Sattu Paratha</a>
+          <a href="#">Mutton Curry</a>
+          <a href="#">Biryani</a>
+          <a href="#">Khaja Mithai</a>
+        </div>
+        <div class="footer-col">
+          <h5>Humse Milein</h5>
+          <a href="#">📍 Station Road, Patna – 800001</a>
+          <a href="#">📞 +91 98765 43210</a>
+          <a href="#">✉ swad@biharkaswad.com</a>
+          <a href="#">🕐 Roz: 8 AM – 11 PM</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Bihar Ka Swad. Sabhi haq surakshit hain.</p>
+        <p>Made with ❤️ in Patna, Bihar</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     RESTAURANT PAGE
+══════════════════════════════════════════════════ -->
+<div id="restaurant" class="page-section">
+  <div class="section-wrap">
+    <!-- Info Strip -->
+    <div class="rest-strip">
+      <div class="rest-strip-left">
+        <h3>Bihar Ka Swad Restaurant</h3>
+        <p>1997 se Patna ki shaan — purani diwaron mein naye zamanon ka swad. Har roz subah uthke taazi samagri se khana banta hai.</p>
+        <div class="rest-strip-badges">
+          <span class="rest-badge">⭐ 4.9 / 5.0</span>
+          <span class="rest-badge">🏆 Best Bihari 2024</span>
+          <span class="rest-badge">🥗 Veg + Non-Veg</span>
+          <span class="rest-badge">🎉 Events Available</span>
+        </div>
+      </div>
+      <div class="rest-info-grid">
+        <div class="rest-info-row"><div class="icon">📍</div>Station Road, Patna – 800001, Bihar</div>
+        <div class="rest-info-row"><div class="icon">📞</div>+91 98765 43210</div>
+        <div class="rest-info-row"><div class="icon">🕐</div>Roz Subah 8 baje – Raat 11 baje</div>
+        <div class="rest-info-row"><div class="icon">🛵</div>Free delivery ₹299+ orders par</div>
+      </div>
+    </div>
+
+    <!-- Menu -->
+    <div class="sec-head">
+      <div class="kicker">🍽 Hamara Menu</div>
+      <h2>Sabse Swadisht Bihari Khana</h2>
+      <p>Har dish mein Bihar ki mitti ki khushbu aur ma ke haath ka swad</p>
+    </div>
+    <div class="pill-tabs" id="restTabs">
+      <button class="pill active" onclick="filterMenu('all',this)">🍽 Sab</button>
+      <button class="pill" onclick="filterMenu('bihari',this)">🔥 Bihari Special</button>
+      <button class="pill" onclick="filterMenu('curry',this)">🥘 Curry</button>
+      <button class="pill" onclick="filterMenu('biryani',this)">🍚 Biryani</button>
+      <button class="pill" onclick="filterMenu('snacks',this)">🥗 Snacks</button>
+      <button class="pill" onclick="filterMenu('mithai',this)">🍬 Mithai</button>
+      <button class="pill" onclick="filterMenu('drinks',this)">🥛 Drinks</button>
+    </div>
+    <div class="dishes-grid" id="menuGrid"></div>
+
+    <!-- Table Booking -->
+    <div style="margin-top:4rem;">
+      <div class="sec-head">
+        <div class="kicker">🪑 Reservation</div>
+        <h2>Table Book Karein</h2>
+        <p>Pehle se booking karein aur apni favourite seat pakki karein</p>
+      </div>
+      <div class="booking-card">
+        <h3>🪑 Table Reservation</h3>
+        <p>Kisi bhi special occasion ke liye — birthday, anniversary, family gathering — advance booking zaruri hai</p>
+        <div class="booking-grid">
+          <div class="form-field"><label>Aapka Naam</label><input type="text" placeholder="Jaise: Ramesh Kumar" id="bName"></div>
+          <div class="form-field"><label>Phone</label><input type="tel" placeholder="+91 XXXXX XXXXX" id="bPhone"></div>
+          <div class="form-field"><label>Tarikh</label><input type="date" id="bDate"></div>
+          <div class="form-field"><label>Samay</label><input type="time" id="bTime"></div>
+          <div class="form-field">
+            <label>Log</label>
+            <select id="bGuests">
+              <option>1 Log</option><option>2 Log</option><option selected>3–4 Log</option>
+              <option>5–6 Log</option><option>7–10 Log</option><option>10+ (Party)</option>
+            </select>
+          </div>
+          <div class="form-field"><label>Vishesh Iccha</label><input type="text" placeholder="Jaise: Birthday cake chahiye..."></div>
+          <button class="btn-book" onclick="bookTable()">✓ Table Book Karein</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-bottom" style="border:none;padding:1.5rem 0;">
+        <p>© 2025 Bihar Ka Swad. Made with ❤️ in Patna</p>
+        <div style="display:flex;gap:1.5rem;">
+          <a href="#" onclick="goTo('home',null)" style="color:#8B7052;font-size:0.82rem;">Home</a>
+          <a href="#" onclick="goTo('order',null)" style="color:#8B7052;font-size:0.82rem;">Order</a>
+          <a href="#" onclick="goTo('blog',null)" style="color:#8B7052;font-size:0.82rem;">Blog</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     RECIPES PAGE
+══════════════════════════════════════════════════ -->
+<div id="recipes" class="page-section">
+  <div class="section-wrap">
+    <div class="sec-head">
+      <div class="kicker">👨‍🍳 Ghar Ki Recipes</div>
+      <h2>Bihar Ke Mashhoor Recipes</h2>
+      <p>Step-by-step guide se ghar par banao asli Bihari swad</p>
+    </div>
+    <div class="recipe-search-bar">
+      <input type="text" id="recipeSrch" placeholder="Recipe dhundho… jaise Litti, Sattu, Khaja…" oninput="searchRecipes()">
+      <button onclick="searchRecipes()">🔍 Search</button>
+    </div>
+    <div class="recipes-grid" id="recipeGrid"></div>
+  </div>
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-bottom" style="border:none;padding:1.5rem 0;">
+        <p>© 2025 Bihar Ka Swad. Made with ❤️ in Patna</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     ORDER PAGE
+══════════════════════════════════════════════════ -->
+<div id="order" class="page-section">
+  <div class="section-wrap">
+    <div class="sec-head">
+      <div class="kicker">🛵 Online Order</div>
+      <h2>Ghar Baithe Mangao</h2>
+      <p>30 minute mein garam Bihari khana aapke darwaze par</p>
+    </div>
+    <div class="pill-tabs" id="orderTabs">
+      <button class="pill active" onclick="filterOrder('all',this)">Sab</button>
+      <button class="pill" onclick="filterOrder('bihari',this)">Bihari Special</button>
+      <button class="pill" onclick="filterOrder('curry',this)">Curry</button>
+      <button class="pill" onclick="filterOrder('biryani',this)">Biryani</button>
+      <button class="pill" onclick="filterOrder('snacks',this)">Snacks</button>
+      <button class="pill" onclick="filterOrder('mithai',this)">Mithai</button>
+      <button class="pill" onclick="filterOrder('drinks',this)">Drinks</button>
+    </div>
+    <div class="order-layout">
+      <div class="dishes-grid" id="orderGrid" style="grid-template-columns:repeat(auto-fill,minmax(220px,1fr))"></div>
+      <div class="cart-panel">
+        <h3>🛒 Aapki Cart</h3>
+        <div id="cartBody"><div class="cart-empty"><span class="cart-empty-icon">🛒</span>Cart khaali hai<br><small>Items add karein</small></div></div>
+        <div id="cartSub" style="display:none">
+          <div class="cart-subtotals">
+            <div class="cart-row"><span>Subtotal</span><span id="cartSubAmt">₹0</span></div>
+            <div class="cart-row"><span>Delivery</span><span style="color:var(--green)">Free</span></div>
+            <div class="cart-row"><span>GST (5%)</span><span id="cartGst">₹0</span></div>
+            <div class="cart-total-row"><span>Total</span><span class="val" id="cartTotalAmt">₹0</span></div>
+          </div>
+          <button class="btn-checkout" id="btnCheckout" onclick="placeOrder()">📦 Order Place Karein</button>
+          <div class="delivery-badge">✅ 30 min delivery — Patna mein</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-bottom" style="border:none;padding:1.5rem 0;">
+        <p>© 2025 Bihar Ka Swad. Made with ❤️ in Patna</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════════════════
+     BLOG PAGE
+══════════════════════════════════════════════════ -->
+<div id="blog" class="page-section">
+  <div class="section-wrap">
+    <div class="sec-head">
+      <div class="kicker">📝 Food Stories</div>
+      <h2>Bihar Ka Swad Blog</h2>
+      <p>Food reviews, recipes ki kahaniyan aur Bihar ki culinary virasat</p>
+    </div>
+    <div class="blog-grid" id="blogGrid"></div>
+  </div>
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-bottom" style="border:none;padding:1.5rem 0;">
+        <p>© 2025 Bihar Ka Swad. Made with ❤️ in Patna</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- RECIPE MODAL -->
+<div class="modal-bg" id="recipeModal">
+  <div class="modal-box">
+    <button class="modal-close-btn" onclick="closeModal('recipeModal')">✕</button>
+    <div id="recipeModalContent"></div>
+  </div>
+</div>
+
+<!-- BLOG MODAL -->
+<div class="modal-bg" id="blogModal">
+  <div class="modal-box">
+    <button class="modal-close-btn" onclick="closeModal('blogModal')">✕</button>
+    <div id="blogModalContent"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast-stack" id="toastStack"></div>
+
+<!-- ============================================================
+     DATA + LOGIC
+     ============================================================ -->
+<script>
+/* ── DATA ── */
+const DISHES = [
+  // Bihari Special
+  {id:1,cat:'bihari',emoji:'🔥',name:'Litti Chokha',desc:'Sattu stuffed wheat balls with roasted baigan chokha + tomato',price:99,veg:true,best:true},
+  {id:2,cat:'bihari',emoji:'🫓',name:'Sattu Paratha',desc:'Stuffed sattu paratha with achar aur pyaz',price:80,veg:true,best:false},
+  {id:3,cat:'bihari',emoji:'🥞',name:'Thekua',desc:'Deep fried wheat & jaggery cookies — Chhath prasad',price:60,veg:true,best:false},
+  {id:4,cat:'bihari',emoji:'🍲',name:'Chura Dahi',desc:'Flattened rice with thick dahi, sugar and mango',price:70,veg:true,best:true},
+  {id:5,cat:'bihari',emoji:'🥘',name:'Bihari Kadhi Bari',desc:'Spiced yogurt kadhi with fried urad dal baris',price:110,veg:true,best:false},
+  {id:6,cat:'bihari',emoji:'🍛',name:'Dal Pitha',desc:'Steamed rice dumpling stuffed with dal & spices',price:90,veg:true,best:false},
+  // Curry
+  {id:7,cat:'curry',emoji:'🥘',name:'Mutton Curry',desc:'Slow-cooked Bihar style mutton with whole spices',price:280,veg:false,best:true},
+  {id:8,cat:'curry',emoji:'🍛',name:'Chicken Masala',desc:'Desi murgi ki masaledaar gravy',price:240,veg:false,best:false},
+  {id:9,cat:'curry',emoji:'🥗',name:'Chana Ghugni',desc:'Spiced white peas with onion & tamarind',price:100,veg:true,best:false},
+  {id:10,cat:'curry',emoji:'🍲',name:'Aloo Chokha',desc:'Mashed potato with mustard oil & raw onion',price:70,veg:true,best:false},
+  // Biryani
+  {id:11,cat:'biryani',emoji:'🍚',name:'Chicken Biryani',desc:'Aromatic dum biryani with desi murgi',price:220,veg:false,best:true},
+  {id:12,cat:'biryani',emoji:'🍚',name:'Mutton Biryani',desc:'Royal mutton dum biryani — Patna style',price:280,veg:false,best:false},
+  {id:13,cat:'biryani',emoji:'🍚',name:'Veg Biryani',desc:'Basmati rice with seasonal vegetables',price:160,veg:true,best:false},
+  // Snacks
+  {id:14,cat:'snacks',emoji:'🥙',name:'Sattu Kachori',desc:'Crispy kachori stuffed with spiced sattu',price:40,veg:true,best:false},
+  {id:15,cat:'snacks',emoji:'🧆',name:'Chura Pakoda',desc:'Flattened rice fritters — monsoon snack',price:60,veg:true,best:false},
+  {id:16,cat:'snacks',emoji:'🥯',name:'Matar ka Nimki',desc:'Pea stuffed crispy nimki — Bihari style',price:50,veg:true,best:false},
+  // Mithai
+  {id:17,cat:'mithai',emoji:'🍬',name:'Khaja',desc:'Silao ka mashhoor khaja — crispy & flaky sweet',price:60,veg:true,best:true},
+  {id:18,cat:'mithai',emoji:'🍮',name:'Balushahi',desc:'Soft melt-in-mouth sugar-dipped pastry',price:80,veg:true,best:false},
+  {id:19,cat:'mithai',emoji:'🍯',name:'Anarsa',desc:'Rice & jaggery traditional Bihari sweet',price:70,veg:true,best:false},
+  {id:20,cat:'mithai',emoji:'🍚',name:'Kheer',desc:'Creamy rice kheer with cardamom & dry fruits',price:90,veg:true,best:false},
+  // Drinks
+  {id:21,cat:'drinks',emoji:'🥛',name:'Sattu Sharbat',desc:'Cool sattu drink with lemon, cumin & jaggery',price:40,veg:true,best:true},
+  {id:22,cat:'drinks',emoji:'🍹',name:'Bel Sharbat',desc:'Fresh bel fruit sherbet — digestive & cooling',price:50,veg:true,best:false},
+  {id:23,cat:'drinks',emoji:'☕',name:'Adrak Chai',desc:'Strong ginger tea — Bihar waali asli chai',price:25,veg:true,best:false},
+  {id:24,cat:'drinks',emoji:'🥤',name:'Lassi',desc:'Thick, sweet dahi lassi',price:55,veg:true,best:false},
+];
+
+const RECIPES = [
+  {id:1,emoji:'🔥',bg:'linear-gradient(135deg,#FFF3E0,#FFE0B2)',name:'Litti Chokha',cat:'Bihari',time:'60 min',serves:4,diff:'medium',
+   desc:'Bihar ka national dish — sattu ke litti aur roasted baigan chokha, ghar par banane ka poora tarika',
+   ingredients:['2 cups Gehun atta (wheat flour)','1 cup Sattu (roasted gram flour)','2 tbsp Mustard oil','1 Baigan (eggplant, large)','2 Tamatar (tomatoes)','1 tsp Kalonji','1 tsp Ajwain','3–4 Green chilies (finely chopped)','1 inch Ginger (grated)','Salt, red chili to taste','Lemon juice','Fresh coriander'],
+   steps:['Atta mein namak, ajwain, mustard oil add karein. Paani se tight dough banao aur 20 min rest dein.',
+          'Sattu filling: sattu, pyaz, hari mirchi, adrak, kalonji, lemon juice, mustard oil, namak mix karein.',
+          'Dough ke small balls banao. Beech mein sattu filling bharo. Tight seal karein.',
+          'Litti ko coal fire ya oven (200°C, 30–35 min) mein golden brown hone tak pakao. Ghee se coat karein.',
+          'Chokha: baigan, tamatar direct flame par jalayen jab tak charred ho jaye.',
+          'Jali hui outer skin utaro. Baigan machlein. Mustard oil, green chili, pyaz, namak, coriander mix karein.',
+          'Garam litti ke saath chokha serve karein. Upar se ghee zarur daalein!'],
+   tip:'Asli swad ke liye litti ko coal (koyla) par pakao — electric oven se thoda alag aur zyada authentic taste aata hai!'},
+  {id:2,emoji:'🫓',bg:'linear-gradient(135deg,#FFF8E1,#FFF3CD)',name:'Sattu Paratha',cat:'Bihari',time:'30 min',serves:3,diff:'easy',
+   desc:'Bihar ka subah ka nashta — sattu se bhari crispy paratha jo din bhar energy deti hai',
+   ingredients:['2 cups Atta','1 cup Sattu','1 tbsp Mustard oil','1 Onion (finely chopped)','2 Green chilies','1 tsp Cumin seeds (jeera)','1 tsp Ajwain','Salt to taste','Lemon juice 1 tbsp','Fresh coriander','Ghee for cooking'],
+   steps:['Atta mein namak aur thoda paani daalke soft dough banao. 15 min dhak kar rakh dein.',
+          'Sattu filling: sattu + pyaz + hari mirchi + jeera + ajwain + nimbu + mustard oil + coriander + namak — sab mix karein.',
+          'Atta ki medium size ball lo. Bel kar flat karein.',
+          'Center mein sattu filling rakh kar edge seal karein. Phir dheere se bel kar flat karein.',
+          'Tawa garram karein. Dono taraf ghee se golden brown hone tak seko.',
+          'Achar, dahi ya green chutney ke saath serve karein.'],
+   tip:'Filling mein aam ka achar ka masala mix karein — taste aur bhi acha hoga!'},
+  {id:3,emoji:'🥘',bg:'linear-gradient(135deg,#EFEBE9,#E8D5B5)',name:'Bihari Mutton Curry',cat:'Non-Veg',time:'75 min',serves:4,diff:'hard',
+   desc:'Patna style gosht — whole spices, mustard oil aur slow cooking se bani authentic Bihari mutton curry',
+   ingredients:['1 kg Mutton (with bone)','3 tbsp Mustard oil','2 large Onions','2 Tomatoes','2 tbsp Ginger-garlic paste','Whole spices: bay leaf, cloves, cardamom, cinnamon','2 tsp Coriander powder','1 tsp Cumin powder','1 tsp Red chili powder','1/2 tsp Turmeric','1 tsp Garam masala','Salt, water as needed'],
+   steps:['Mustard oil ko achhe se garam karein jab tak smoke aane lage (khadak karein). Thanda hone dein, phir dobara garam karein.',
+          'Whole spices daalein. Onion golden brown hone tak pakao — 15 minute lagenge.',
+          'Ginger-garlic paste add karein, 5 min pakao. Tomatoes daalein aur oil alag hone tak pakao.',
+          'Sab spice powders daalein. 2 minute mix karein. Mutton daalein.',
+          'High flame par 10 min bhoono jab tak mutton brown ho jaye. Paani daalein.',
+          'Dhak kar 45–50 min low-medium flame par pakao jab tak mutton tender ho jaye.',
+          'Garam masala daalein. 5 min aur pakao. Bhaat aur roti ke saath serve karein.'],
+   tip:'Mustard oil ka tadka achhe se karna zaroori hai — khadak karne ke baad hi use karein nahi toh kaddvapan aata hai!'},
+  {id:4,emoji:'🍬',bg:'linear-gradient(135deg,#FFF8E1,#FFECB3)',name:'Khaja (Silao Ka)',cat:'Mithai',time:'45 min',serves:20, diff:'medium',
+   desc:'Bihar ka famous crispy sweet — Silao ka original khaja recipe, layers mein bana shakar wala treat',
+   ingredients:['2 cups Maida','4 tbsp Ghee (for dough)','Ghee for deep frying','1.5 cups Sugar','3/4 cup Water','1/4 tsp Cardamom powder','Pinch of saffron (optional)','Water for dough'],
+   steps:['Maida mein 4 tbsp ghee rubh karein jab tak breadcrumb texture bane. Dheere pani daalke stiff dough banao.',
+          'Dough ko 15 min rest dein. Phir얇 얇얇 얇 얇 thin rectangle mein bel dein.',
+          'Upar ghee lagayen, fold karein, phir bel dein — yeh 4–5 baar repeat karein (layering ke liye).',
+          'Small squares ya rectangles mein kaat lein.',
+          'Medium-low ghee mein golden crispy hone tak fry karein — slowly fry karein.',
+          'Chashni: sugar + water + elaichi pakao ek tar ki consistency tak.',
+          'Garam khaja seedha chashni mein daalein. 2 min rakh kar nikal lein. Dry karein.'],
+   tip:'Khaja fry karte waqt patience rakhein — high flame par andar kacha reh jata hai!'},
+  {id:5,emoji:'🥛',bg:'linear-gradient(135deg,#E3F2FD,#BBDEFB)',name:'Sattu Sharbat',cat:'Drinks',time:'5 min',serves:2,diff:'easy',
+   desc:'Bihar ka summer drink — sattu, nimbu, jeera aur aam ka panna — ek baar piyo toh bhulaoge nahi',
+   ingredients:['4 tbsp Sattu (roasted gram flour)','2 glasses Cold water','1 Lemon','1 tsp Roasted cumin powder','1/2 tsp Black salt (kala namak)','Regular salt to taste','Jaggery or sugar to taste','Fresh mint leaves','Ice cubes'],
+   steps:['Glass mein sattu daalein. Thoda paani daalke smooth paste banao — koi lumps nahi hone chahiye.',
+          'Isi glass mein baaki thanda paani daalein. Achhe se mix karein.',
+          'Nimbu ka ras, kala namak, regular namak, jeera powder daalein.',
+          'Gur ya sugar add karein — apne taste ke hisaab se sweet ya namkeen.',
+          'Ice daalein. Pudina se garnish karein.',
+          'Serve karein aur garmi bhulaein!'],
+   tip:'Aam ka panna thoda add karein — taste aur bhi refreshing ho jaata hai!'},
+  {id:6,emoji:'🍲',bg:'linear-gradient(135deg,#F3E5F5,#E1BEE7)',name:'Chura Dahi',cat:'Bihari',time:'10 min',serves:2,diff:'easy',
+   desc:'Bihari subah ka favourite — poha, dahi, sugar aur aam ka combination jo minute mein tayar hota hai',
+   ingredients:['1 cup Poha (chura / flattened rice)','1 cup Thick dahi (yogurt)','2 tbsp Sugar or jaggery','1/2 cup Ripe mango (chopped, optional)','1/4 cup Doodh (milk, optional)','Pinch of salt','Fresh coconut shavings (optional)'],
+   steps:['Poha ko haath se halka mash karein — bilkul fine nahi, thoda texture rehne dein.',
+          'Dahi ko smooth karein. Thoda milk mix karein agar thick lage.',
+          'Poha mein dahi, sugar, namak mix karein.',
+          'Aam ke tukde upar daalein.',
+          'Coconut shavings se garnish karein.',
+          'Turant serve karein — time ke saath poha zyada soft ho jaata hai.'],
+   tip:'Dahi thoda khatta hona chahiye — meetha curd se taste nahi aata!'},
+];
+
+const BLOGS = [
+  {id:1,emoji:'🔥',bg:'#FFF3E0',cat:'Bihar Special',date:'18 Feb 2025',read:'5 min',
+   title:'Litti Chokha: Bihar Ka Raajkhana Jis Par Poora Desh Fida Hai',
+   preview:'Bihar ka yeh humble dish jo pehle sirf gaaon mein milta tha, aaj Delhi se Mumbai tak restaurants mein shaan se serve hota hai...',
+   content:`<p>Jab bhi Bihar ka naam aata hai, pehla khyaal aata hai — <b>Litti Chokha</b>. Yeh ek aise dish ki kahani hai jo sirf ek recipe nahi, ek virasat hai.</p><h5>Litti Ka Itihaas</h5><p>Angrez zamaane mein Bihar ke kisan jab khet mein kaam karte the, unhe aisa khana chahiye tha jo der tak energy de aur asaan se bane. Sattu — jo roasted chane ka atta hai — isi zaroorat ka jawab tha. Gol wheat balls mein sattu bhar ke coal fire par pakana — yahi tha litti ka janam.</p><h5>Chokha Ka Jadoo</h5><p>Baigan ko seedha aag mein jalana aur usme mustard oil milana — yeh technique Bihari cooking ki jaan hai. Roasted flavor jo aata hai woh kisi aur cheez se replace nahi ho sakta.</p><h5>Aaj Ka Scene</h5><p>Zomato aur Swiggy ke aane ke baad litti chokha delivery orders mein sabse top position par hai Bihar mein. Patna ke litti dukaan wale ab monthly lakhon kamate hain.</p>`},
+  {id:2,emoji:'🌾',bg:'#F1F8E9',cat:'Culture',date:'10 Feb 2025',read:'4 min',
+   title:'Sattu — Bihar Ka Superfood Jo Duniya Ke Protein Shake Ko Peeche Chhod De',
+   preview:'Sattu ek aise ingredient hai jise Bihar mein centuries se kha rahe hain aur aaj modern nutrition science bhi iska loha maan rahi hai...',
+   content:`<p>Sattu sirf ek ingredient nahi — yeh Bihar ki pehchaan hai. Roasted chane ya jau ka atta jo ghar ghar mein milta hai.</p><h5>Nutrition Facts</h5><p>100g sattu mein: 22g protein, 65g carbs, 7g fiber, iron, calcium — yeh sab kishtein aapko ek gym protein shake mein nahi milti.</p><h5>Bihar Mein Sattu Ka Use</h5><p>Sharbat se lekar paratha, kachori se litti, namkeen se meetha — sattu Bihar ka all-purpose ingredient hai.</p><h5>Global Recognition</h5><p>Aaj New York aur London mein "Sattu Smoothie" sell ho raha hai premium cafes mein. Hamare dadon ne jo khaya woh aaj trendy hai!</p>`},
+  {id:3,emoji:'🏙',bg:'#E8F5E9',cat:'Travel + Food',date:'5 Feb 2025',read:'6 min',
+   title:'Patna Ke 7 Best Street Food Spots Jo Har Bihar Wale Ko Pata Hona Chahiye',
+   preview:'Boring Road se lekar Harding Park tak — Patna ki galiyon mein chupi hain woh flavors jo kisi restaurant mein nahi milte...',
+   content:`<p>Patna sirf ek city nahi, ek foodie paradise hai. Jiske aane wale baar baar yahan aate hain — sirf khane ke liye.</p><h5>1. Boring Road — Nimki Adda</h5><p>Evening mein yahan ki nimki aur chai ki khushbu poore mohalle mein failti hai. ₹20 mein ek packet — roz lakh ki kamayee kapta hai yeh "uncle".</p><h5>2. Harding Park — Chaat Gali</h5><p>Gol gappa, aloo tikki, dahi puri — sab ek hi jagah. Saturday evening mein queue lagti hai.</p><h5>3. Station Road — Litti Waale Baba</h5><p>40 saalon se ek hi jagah, ek hi taste. Log Patna aakar yehan zaroor aate hain.</p>`},
+  {id:4,emoji:'🎉',bg:'#FFF8E1',cat:'Festival Food',date:'1 Feb 2025',read:'4 min',
+   title:'Chhath Puja Ka Thekua — Maiya Ka Prasad Jise Bihar Se Bahar Bhi Pooja Jata Hai',
+   preview:'Chhath ka prasad sirf khana nahi, bhakti ka pratyaksha roop hai. Thekua banane ki poori vidhi aur uska spiritual mahatva...',
+   content:`<p>Chhath Puja ke bina Bihar ki pehchaan adhoori hai. Aur Chhath ka prasad — Thekua — ke bina Chhath adhoori.</p><h5>Thekua Kya Hai?</h5><p>Wheat flour, jaggery, ghee, coconut aur saunf se bana ek deep-fried sweet. Simple ingredients, lekin divine taste.</p><h5>Banane Ka Mahatva</h5><p>Chhath mein thekua sirf ghar ki mahilayein banati hain — pure mann se, nahakar, saaf kapdon mein. Yeh "cleanliness" hi taste mein aata hai.</p><h5>Abroad Mein Chhath</h5><p>Aaj London, New York aur Dubai mein Chhath hoti hai. Wahan ke NRIs months pehle se thekua ke ingredients store karte hain.</p>`},
+  {id:5,emoji:'🍯',bg:'#EFEBE9',cat:'Sweet Stories',date:'25 Jan 2025',read:'3 min',
+   title:'Silao Ka Khaja — Bihar Ki Woh Mithai Jise GI Tag Mila Hai',
+   preview:'Nalanda district ke Silao ka khaja — yeh woh mithai hai jis par Bihar ko GI tag mila. Iska itihaas 2000 saal purana hai...',
+   content:`<p>Silao — Nalanda ka ek chhota sa qasbaa. Lekin yahan ki mithai ka naam itna bada hai ki use Geographical Indication (GI) tag mila hai.</p><h5>2000 Saal Purana Swad</h5><p>Maana jaata hai ki Nalanda Vishwavidyalaya ke zamane mein bhi khaja yaatriyon ko diya jaata tha. Woh khaja aaj bhi same recipe se ban raha hai.</p><h5>Kaise Banta Hai</h5><p>Maida, ghee, layering — yeh process manual hai aur koi machine replicate nahi kar sakti. Asli Silao khaja sirf haath se banta hai.</p><h5>GI Tag Ka Matlab</h5><p>2018 mein khaja ko GI tag mila. Ab sirf Silao ka khaja hi "Silao Khaja" keh sakta hai.</p>`},
+  {id:6,emoji:'👨‍🍳',bg:'#E3F2FD',cat:'Tips',date:'20 Jan 2025',read:'5 min',
+   title:'Bihari Khana Ghar Par Zyada Swadisht Kaise Banayein — 8 Expert Tips',
+   preview:'Bihar ke expert cooks ka kehna hai ki asli Bihari swad teen cheezon mein hai: mustard oil, slow cooking aur pyaar...',
+   content:`<p>Bihari food ka raaz koi secret ingredient nahi — technique hai. In 8 tips se aap bhi ghar par authentic taste la sakte hain.</p><h5>1. Sarson Ka Tel (Mustard Oil)</h5><p>Bihari cooking mein mustard oil ka use khadak hone ke baad karna zaroori hai. Pehle smoke point tak garam karein, thanda karein, phir tadka daalein.</p><h5>2. Sattu Ka Sahi Use</h5><p>Sattu mein namak, mustard oil aur lemon — yeh combination sab kuch behtar bana deta hai.</p><h5>3. Slow Cooking</h5><p>Mutton curry ya dal — low flame par slow cooking se taste double hota hai. Patience rakhein!</p><h5>4. Cow Dung / Coal Fire</h5><p>Litti aur roti ka asli swad coal fire se aata hai. Electric oven me taste 70% aata hai.</p><h5>5. Pyaar se Banao</h5><p>Yeh joke nahi — researchers ne prove kiya hai ki happy cook ka khana actually better taste karta hai!</p>`},
+];
+
+/* ── CART STATE ── */
+let cart = {};
+
+function cartTotal() {
+  return Object.values(cart).reduce((s,v)=>s+v.qty*v.price,0);
+}
+function cartCount() {
+  return Object.values(cart).reduce((s,v)=>s+v.qty,0);
+}
+function updateCartBadge() {
+  document.getElementById('cartCount').textContent = cartCount();
+}
+
+function addToCart(id) {
+  const d = DISHES.find(x=>x.id===id);
+  if (!d) return;
+  if (cart[id]) cart[id].qty++;
+  else cart[id] = {...d, qty:1};
+  updateCartBadge();
+  renderCart();
+  renderOrderGrid(currentOrderFilter);
+  showToast(`🛒 ${d.emoji} ${d.name} cart mein add hua!`);
+}
+
+function changeQty(id, delta) {
+  if (!cart[id]) { if (delta>0) addToCart(id); return; }
+  cart[id].qty += delta;
+  if (cart[id].qty <= 0) delete cart[id];
+  updateCartBadge();
+  renderCart();
+  renderOrderGrid(currentOrderFilter);
+}
+
+function renderCart() {
+  const body = document.getElementById('cartBody');
+  const sub = document.getElementById('cartSub');
+  const items = Object.values(cart);
+  if (!items.length) {
+    body.innerHTML='<div class="cart-empty"><span class="cart-empty-icon">🛒</span>Cart khaali hai<br><small>Items add karein</small></div>';
+    sub.style.display='none'; return;
+  }
+  body.innerHTML = items.map(i=>`
+    <div class="cart-item">
+      <div class="ci-left">
+        <h5>${i.emoji} ${i.name}</h5>
+        <p>${i.qty} × ₹${i.price}</p>
+      </div>
+      <div class="ci-right">
+        <span class="ci-price">₹${i.qty*i.price}</span>
+        <button class="ci-del" onclick="changeQty(${i.id},-1)">✕</button>
+      </div>
+    </div>`).join('');
+  const sub_amt = cartTotal();
+  const gst = Math.round(sub_amt*0.05);
+  document.getElementById('cartSubAmt').textContent='₹'+sub_amt;
+  document.getElementById('cartGst').textContent='₹'+gst;
+  document.getElementById('cartTotalAmt').textContent='₹'+(sub_amt+gst);
+  sub.style.display='block';
+}
+
+function placeOrder() {
+  cart = {};
+  updateCartBadge();
+  renderCart();
+  renderOrderGrid(currentOrderFilter);
+  showToast('🎉 Order place ho gaya! 30 min mein delivery hogi. Shukriya!');
+}
+
+/* ── MENU RENDER ── */
+function renderDishCard(d, showAdd=true) {
+  const vegBadge = d.veg ? '<div class="badge-veg"></div>' : '<div class="badge-nonveg"></div>';
+  const bestBadge = d.best ? '<span class="badge-bestseller">Bestseller</span>' : '';
+  return `
+    <div class="dish-card">
+      <div class="dish-img">
+        ${d.emoji}
+        <div class="dish-badges">${vegBadge}${bestBadge}</div>
+      </div>
+      <div class="dish-body">
+        <h4>${d.name}</h4>
+        <p class="desc">${d.desc}</p>
+        <div class="dish-footer">
+          <div class="dish-price">₹${d.price}<span>/ plate</span></div>
+          ${showAdd ? `<button class="btn-addcart" onclick="addToCart(${d.id})">+ Add</button>` : ''}
+        </div>
+      </div>
+    </div>`;
+}
+
+let currentMenuFilter='all';
+function filterMenu(f, btn) {
+  document.querySelectorAll('#restTabs .pill').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  currentMenuFilter=f;
+  const items = f==='all' ? DISHES : DISHES.filter(d=>d.cat===f);
+  document.getElementById('menuGrid').innerHTML = items.map(d=>renderDishCard(d)).join('');
+}
+
+let currentOrderFilter='all';
+function renderOrderGrid(f) {
+  const items = f==='all' ? DISHES : DISHES.filter(d=>d.cat===f);
+  document.getElementById('orderGrid').innerHTML = items.map(d => {
+    const qty = cart[d.id]?.qty||0;
+    const vegBadge = d.veg ? '<div class="badge-veg"></div>' : '<div class="badge-nonveg"></div>';
+    const bestBadge = d.best ? '<span class="badge-bestseller">Bestseller</span>' : '';
+    return `
+      <div class="order-card">
+        <div class="dish-img" style="height:140px;font-size:3.5rem;border-radius:12px;margin-bottom:0.75rem;">
+          ${d.emoji}
+          <div class="dish-badges">${vegBadge}${bestBadge}</div>
+        </div>
+        <h4>${d.name}</h4>
+        <p>${d.desc}</p>
+        <div class="oc-foot">
+          <div class="oc-price">₹${d.price}</div>
+          <div class="qty-wrap">
+            <button class="qty-btn" onclick="changeQty(${d.id},-1)">−</button>
+            <span class="qty-num">${qty}</span>
+            <button class="qty-btn" onclick="changeQty(${d.id},1)">+</button>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+function filterOrder(f, btn) {
+  document.querySelectorAll('#orderTabs .pill').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  currentOrderFilter=f;
+  renderOrderGrid(f);
+}
+
+/* ── POPULAR (home) ── */
+function renderHomePopular() {
+  const popular = DISHES.filter(d=>d.best).slice(0,6);
+  document.getElementById('homePopular').innerHTML = popular.map(d=>renderDishCard(d)).join('');
+}
+
+/* ── RECIPES ── */
+function renderRecipes(list) {
+  document.getElementById('recipeGrid').innerHTML = list.map(r=>`
+    <div class="recipe-card" onclick="openRecipe(${r.id})">
+      <div class="recipe-img" style="background:${r.bg}">
+        ${r.emoji}
+        <span class="diff-chip ${r.diff}">${r.diff==='easy'?'Easy':r.diff==='medium'?'Medium':'Expert'}</span>
+      </div>
+      <div class="recipe-body">
+        <h4>${r.name}</h4>
+        <p>${r.desc}</p>
+        <div class="recipe-meta-row">
+          <span class="rmeta">⏱ <b>${r.time}</b></span>
+          <span class="rmeta">👥 <b>${r.serves} log</b></span>
+          <span class="rmeta">🍽 <b>${r.cat}</b></span>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function searchRecipes() {
+  const q = document.getElementById('recipeSrch').value.toLowerCase();
+  renderRecipes(RECIPES.filter(r=>r.name.toLowerCase().includes(q)||r.cat.toLowerCase().includes(q)));
+}
+
+function openRecipe(id) {
+  const r = RECIPES.find(x=>x.id===id);
+  document.getElementById('recipeModalContent').innerHTML=`
+    <div class="modal-header">
+      <div class="modal-emoji">${r.emoji}</div>
+      <h3>${r.name}</h3>
+      <div class="modal-chips">
+        <span class="modal-chip">⏱ ${r.time}</span>
+        <span class="modal-chip">👥 ${r.serves} log</span>
+        <span class="modal-chip">🍽 ${r.cat}</span>
+        <span class="modal-chip diff-chip ${r.diff}" style="position:static;margin:0">${r.diff}</span>
+      </div>
+      <p style="color:var(--muted);font-size:0.9rem">${r.desc}</p>
+    </div>
+    <div class="modal-body">
+      <h4>🛒 Ingredients (Samagri)</h4>
+      <ul class="ingredient-list">${r.ingredients.map(i=>`<li>${i}</li>`).join('')}</ul>
+      <h4>👨‍🍳 Banane Ka Tarika</h4>
+      <ol class="steps-ol">${r.steps.map(s=>`<li>${s}</li>`).join('')}</ol>
+      <div class="pro-tip"><b>💡 Pro Tip:</b> ${r.tip}</div>
+    </div>`;
+  document.getElementById('recipeModal').classList.add('open');
+}
+
+/* ── BLOG ── */
+function renderBlogs() {
+  document.getElementById('blogGrid').innerHTML = BLOGS.map(b=>`
+    <div class="blog-card">
+      <div class="blog-img" style="background:linear-gradient(135deg,${b.bg},#FFF)">
+        ${b.emoji}
+        <span class="blog-cat">${b.cat}</span>
+      </div>
+      <div class="blog-body">
+        <div class="blog-meta"><span>📅 ${b.date}</span><span>⏱ ${b.read} read</span></div>
+        <h4>${b.title}</h4>
+        <p>${b.preview}</p>
+        <button class="btn-read-more" onclick="openBlog(${b.id})">Poora Padhein →</button>
+      </div>
+    </div>`).join('');
+}
+
+function openBlog(id) {
+  const b = BLOGS.find(x=>x.id===id);
+  document.getElementById('blogModalContent').innerHTML=`
+    <div class="modal-header">
+      <div class="modal-emoji">${b.emoji}</div>
+      <div style="color:var(--red);font-size:0.72rem;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:0.3rem">${b.cat}</div>
+      <h3>${b.title}</h3>
+      <div class="modal-chips"><span class="modal-chip">📅 ${b.date}</span><span class="modal-chip">⏱ ${b.read}</span></div>
+    </div>
+    <div class="modal-body"><div class="blog-modal-content" style="font-size:0.93rem;line-height:1.8;color:var(--text)">${b.content}</div></div>`;
+  document.getElementById('blogModal').classList.add('open');
+}
+
+/* ── MODAL ── */
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-bg').forEach(m=>{
+  m.addEventListener('click',e=>{ if(e.target===m) m.classList.remove('open'); });
+});
+
+/* ── TABLE BOOKING ── */
+function bookTable() {
+  const n=document.getElementById('bName').value.trim();
+  const p=document.getElementById('bPhone').value.trim();
+  const d=document.getElementById('bDate').value;
+  const t=document.getElementById('bTime').value;
+  if(!n||!p||!d||!t){ showToast('⚠️ Sab fields fill karein!','#B5270C'); return; }
+  showToast(`✅ Table book ho gaya, ${n}! Hum call karenge confirm karne ke liye.`);
+  ['bName','bPhone','bDate','bTime'].forEach(id=>document.getElementById(id).value='');
+}
+
+/* ── NAVIGATION ── */
+function goTo(page, linkEl) {
+  document.querySelectorAll('.page-section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(page).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
+  if(linkEl) linkEl.classList.add('active');
+  else {
+    document.querySelectorAll('.nav-links a').forEach(a=>{
+      if(a.getAttribute('onclick')&&a.getAttribute('onclick').includes(`'${page}'`)) a.classList.add('active');
+    });
+  }
+  document.getElementById('navLinks').classList.remove('open');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(page==='restaurant') filterMenu(currentMenuFilter, document.querySelector('#restTabs .pill.active')||document.querySelector('#restTabs .pill'));
+  if(page==='recipes') renderRecipes(RECIPES);
+  if(page==='order') { renderOrderGrid(currentOrderFilter); renderCart(); }
+  if(page==='blog') renderBlogs();
+}
+
+function toggleNav() {
+  document.getElementById('navLinks').classList.toggle('open');
+}
+
+/* ── TOAST ── */
+let toastId=0;
+function showToast(msg, color='') {
+  const stack=document.getElementById('toastStack');
+  const el=document.createElement('div');
+  el.className='toast'; el.textContent=msg;
+  if(color) el.style.borderLeftColor=color;
+  stack.appendChild(el);
+  requestAnimationFrame(()=>{ requestAnimationFrame(()=>el.classList.add('show')); });
+  setTimeout(()=>{ el.classList.remove('show'); setTimeout(()=>el.remove(),400); },3000);
+}
+
+/* ── INIT ── */
+renderHomePopular();
+renderMenuGrid_init();
+renderOrderGrid('all');
+renderRecipes(RECIPES);
+renderBlogs();
+
+function renderMenuGrid_init() {
+  document.getElementById('menuGrid').innerHTML = DISHES.map(d=>renderDishCard(d)).join('');
+}
+</script>
+</body>
+</html>
